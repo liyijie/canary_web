@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   has_many :reverse_relations, class_name: "Relation", :foreign_key => "followed_id", dependent: :destroy
   has_many :following, through: :relations, source: :followed
   has_many :followers, through: :reverse_relations, source: :follower
+  has_one :user_info
 
   def follow! followed
     self.relations.create! followed_id: followed.id

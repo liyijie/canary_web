@@ -1,4 +1,16 @@
-FactoryGirl.define do
+FactoryGirl.define do 
+  factory :user_info do
+    sex :male
+    nickname "MyString"
+    birth Date.new(2007, 5, 12)
+    destination "杭州"
+    hotel_type 2
+    flight "MyString"
+    train "MyString"
+    wechat "MyString"
+    qq "MyString"
+  end
+
   factory :user do
     phone "13818181888"
     password "password"
