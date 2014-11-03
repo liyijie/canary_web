@@ -15,6 +15,7 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  phone                  :string(255)
 #
 
 require 'rails_helper'
@@ -22,10 +23,20 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
   describe "attributes" do
     before(:each) do
-
+      @user = create(:user)
     end
     it "should have a phone method" do
-      
+      expect(@user).to respond_to(:phone)
+    end
+
+    it "phone atrribute should be unique" do
+      @another_user = build(:user)
+      expect(@another_user).to be_invalid
+    end
+
+    it "phone attribute should not be nil" do
+      @user.phone = nil
+      expect(@user).to be_invalid
     end
   end
 end
