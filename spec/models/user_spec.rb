@@ -39,4 +39,60 @@ RSpec.describe User, :type => :model do
       expect(@user).to be_invalid
     end
   end
+
+  describe "relations" do
+    before(:each) do
+      @user = create(:user)
+      @followed = create(:followed_user)
+    end
+
+    it "should have a relations method" do
+      expect(@user).to respond_to :relations
+    end
+
+    it "should have a following method" do
+      expect(@user).to respond_to :following
+    end
+
+    it "should have a following? method" do
+      expect(@user).to respond_to :following?
+    end
+
+    it "should have a follow! method" do
+      expect(@user).to respond_to :follow!
+    end
+
+    it "should follow another user" do
+      @user.follow! @followed
+      expect(@user).to be_following @followed
+    end
+
+    it "should include the followd user in the following array" do
+      @user.follow! @followed
+      expect(@user.following).to include @followed
+    end
+
+    it "should have a unfollow! method" do
+      expect(@user).to respond_to :unfollow!
+    end
+
+    it "should unfollow a user" do
+      @user.follow! @followed
+      @user.unfollow! @followed
+      expect(@user).not_to be_following @followed
+    end
+
+    it "should have a reverse_relations method" do
+      expect(@user).to respond_to :reverse_relations
+    end
+
+    it "should have a followers method" do
+      expect(@user).to respond_to :followers
+    end
+
+    it "should include the follower in the followers array" do
+      @user.follow! @followed
+      expect(@followed.followers).to include @user
+    end
+  end
 end
