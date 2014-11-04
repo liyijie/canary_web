@@ -19,7 +19,13 @@
 
 class UserInfo < ActiveRecord::Base
   enum sex: [ :male, :female ]
-  enum hotel_type: [ :chain, :start3, :start4 ,:start5 ]
 
   belongs_to :user
+
+  searchable do
+    integer :user_id
+    string :sex
+    integer :hotel_type
+    text :destination
+  end
 end
