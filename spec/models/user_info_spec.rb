@@ -103,5 +103,22 @@ RSpec.describe UserInfo, :type => :model do
         expect(users.results.count).to eq 5
       end
     end
+
+    describe "pagenate+sunspot_rails" do
+      before(:each) do
+        5.times { create(:male_user_info) }
+        6.times { create(:female_user_info) }
+      end
+      users = UserInfo.search do
+        with :sex, "male"
+        paginate per_page: 2
+      end
+      it "should be paginate correct" do
+        expect(users.total).to eq 5
+        expect(users.results.total_pages).to eq 3
+        expect(users.results).to be_first_page 
+        expect(users.results.current_page).to eq 1
+      end
+    end
   end
 end
