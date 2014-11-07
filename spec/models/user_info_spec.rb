@@ -25,6 +25,7 @@ RSpec.describe UserInfo, :type => :model do
       @user = create(:user)
       @user.user_info = create(:user_info)
       @user_info = @user.user_info
+      Sunspot.commit
     end
     it "sex should be a enum attribute" do
       expect(@user_info.sex).to eq "male"
@@ -44,6 +45,7 @@ RSpec.describe UserInfo, :type => :model do
       @user = create(:user)
       @user.user_info = create(:user_info)
       @user_info = @user.user_info
+      Sunspot.commit
     end
 
     it "should have the correct user relation" do
@@ -58,6 +60,7 @@ RSpec.describe UserInfo, :type => :model do
       before(:each) do
         5.times { create(:male_user_info) }
         6.times { create(:female_user_info) }
+        Sunspot.commit
       end
 
       it "should find male user infos" do
@@ -108,16 +111,37 @@ RSpec.describe UserInfo, :type => :model do
       before(:each) do
         5.times { create(:male_user_info) }
         6.times { create(:female_user_info) }
+        Sunspot.commit
       end
       users = UserInfo.search do
         with :sex, "male"
         paginate per_page: 2
       end
       it "should be paginate correct" do
-        expect(users.total).to eq 5
         expect(users.results.total_pages).to eq 3
         expect(users.results).to be_first_page 
         expect(users.results.current_page).to eq 1
+      end
+    end
+  end
+
+  context 'match user infos' do
+    before(:each) do
+      5.times { create(:male_user_info, destination: "北京") }
+      6.times { create(:female_user_info, destination: "天安门") }
+      7.times { create(:female_user_info, destination: "北京") }
+      Sunspot.commit
+    end
+    describe "male condition" do
+      it "should not find parts female user infos" do
+        @male = create(:male_user_info, destination: "北京市")
+        match_users = @male.find_match_user_infos
+        expect(match_users.count).to eq 7
+      end
+      it "should not find all female user infos" do
+        @male = create(:male_user_info, destination: "北京 天安门")
+        match_users = @male.find_match_user_infos
+        expect(match_users.count).to eq 13
       end
     end
   end
