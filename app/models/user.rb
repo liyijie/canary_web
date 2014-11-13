@@ -16,6 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  phone                  :string(255)
+#  authentication_token   :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -34,6 +35,8 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relations, source: :follower
   has_one :user_info
 
+  before_save :ensure_authentication_token
+
   def follow! followed
     self.relations.create! followed_id: followed.id
   end
@@ -50,5 +53,21 @@ class User < ActiveRecord::Base
   def email_required?
     false
   end
+
+   def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+ 
+  private
+  
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
+
 
 end

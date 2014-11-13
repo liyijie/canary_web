@@ -16,6 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  phone                  :string(255)
+#  authentication_token   :string(255)
 #
 
 require 'rails_helper'
@@ -93,6 +94,15 @@ RSpec.describe User, :type => :model do
     it "should include the follower in the followers array" do
       @user.follow! @followed
       expect(@followed.followers).to include @user
+    end
+  end
+
+  describe "authentication token" do
+    it "should generate authentication token when user created" do
+      @user = build(:user)
+      expect(@user.authentication_token).to be_blank
+      @user.save!
+      expect(@user.authentication_token).not_to be_blank
     end
   end
 end
