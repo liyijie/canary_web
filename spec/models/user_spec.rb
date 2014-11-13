@@ -16,6 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  phone                  :string(255)
+#  authentication_token   :string(255)
 #
 
 require 'rails_helper'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103132455) do
+ActiveRecord::Schema.define(version: 20141113074543) do
 
   create_table "relations", force: true do |t|
     t.integer  "followed_id"
@@ -55,8 +55,10 @@ ActiveRecord::Schema.define(version: 20141103132455) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["phone"], name: "index_users_on_phone", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
