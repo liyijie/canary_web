@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103042644) do
+ActiveRecord::Schema.define(version: 20141103132455) do
 
   create_table "relations", force: true do |t|
     t.integer  "followed_id"
@@ -22,6 +22,24 @@ ActiveRecord::Schema.define(version: 20141103042644) do
 
   add_index "relations", ["followed_id"], name: "index_relations_on_followed_id"
   add_index "relations", ["follower_id"], name: "index_relations_on_follower_id"
+
+  create_table "user_infos", force: true do |t|
+    t.integer  "sex"
+    t.string   "nickname"
+    t.date     "birth"
+    t.string   "destination"
+    t.integer  "hotel_type"
+    t.string   "flight"
+    t.string   "train"
+    t.string   "wechat"
+    t.string   "qq"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "user_infos", ["sex"], name: "index_user_infos_on_sex"
+  add_index "user_infos", ["user_id"], name: "index_user_infos_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
