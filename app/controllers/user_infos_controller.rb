@@ -6,9 +6,20 @@ class UserInfosController < ApplicationController
   # GET /user_infos
   # GET /user_infos.json
   def index
-    @user_infos = UserInfo.all
-    sex = current_user.sex
-    search_sex = sex == "male" ? "female" : "male"
+    current_user_info = current_user.user_info
+    @user_infos = current_user_info.find_match_user_infos
+  end
+
+  # GET /user_infos/following
+  # GET /user_infos/following.json
+  def following
+    @user_infos = current_user.following
+  end
+
+  # GET /user_infos/followers
+  # GET /user_infos/followers.json
+  def followers
+    @user_infos = current_user.followers
   end
 
   # GET /user_infos/1
