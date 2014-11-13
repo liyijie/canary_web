@@ -96,4 +96,13 @@ RSpec.describe User, :type => :model do
       expect(@followed.followers).to include @user
     end
   end
+
+  describe "authentication token" do
+    it "should generate authentication token when user created" do
+      @user = build(:user)
+      expect(@user.authentication_token).to be_blank
+      @user.save!
+      expect(@user.authentication_token).not_to be_blank
+    end
+  end
 end
