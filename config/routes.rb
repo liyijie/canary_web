@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
+
+  namespace :api do
+    devise_scope :user do
+      post 'sessions' => 'sessions#create', :as => 'login'
+      delete 'sessions' => 'sessions#destroy', :as => 'logout'
+      post 'registrations' => 'registrations#create', :as => 'register'
+    end
+  end
+  
   resources :user_infos do
     collection do
       get 'followers'
