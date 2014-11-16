@@ -14,13 +14,13 @@ class UserInfosController < ApplicationController
   # GET /user_infos/following
   # GET /user_infos/following.json
   def following
-    @user_infos = current_user.following
+    @users = current_user.following.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /user_infos/followers
   # GET /user_infos/followers.json
   def followers
-    @user_infos = current_user.followers
+    @users = current_user.followers.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /user_infos/1
