@@ -38,6 +38,11 @@ RSpec.describe UserInfo, :type => :model do
     it "birth should be a date attribute" do
       expect(@user_info.birth).to eq Date.new(2007, 5 ,12)
     end
+
+    it "should be count constellation right" do
+      expect(@user_info.constellation).to eq "金牛座"
+    end
+
   end
 
   describe "user relation" do
