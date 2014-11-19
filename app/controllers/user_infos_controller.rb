@@ -40,7 +40,7 @@ class UserInfosController < ApplicationController
   # POST /user_infos
   # POST /user_infos.json
   def create
-    @user_info = UserInfo.new(user_info_params)
+    @user_info = current_user.user_info.new(user_info_params)
 
     respond_to do |format|
       if @user_info.save
@@ -80,11 +80,14 @@ class UserInfosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_info
-      @user_info = UserInfo.find(params[:id])
+      @user_info = current_user.user_info.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_info_params
-      params[:user_info]
+      params.require(:user_info).permit(
+        :sex, :nickname, :birth, :destination, :hotel_type, :flight, :train,
+        :wechat, :qq
+        )
     end
 end
