@@ -40,7 +40,8 @@ class UserInfosController < ApplicationController
   # POST /user_infos
   # POST /user_infos.json
   def create
-    @user_info = current_user.user_info.new(user_info_params)
+    @user_info = current_user.user_info || current_user.build_user_info
+    @user_info.update_attributes(user_info_params)
 
     respond_to do |format|
       if @user_info.save
@@ -57,7 +58,7 @@ class UserInfosController < ApplicationController
   # PATCH/PUT /user_infos/1.json
   def update
     respond_to do |format|
-      if @user_info.update(user_info_params)
+      if valid?(@user_info) && @user_info.update(user_info_params)
         format.html { redirect_to @user_info, notice: 'User info was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_info }
       else
@@ -80,7 +81,7 @@ class UserInfosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_info
-      @user_info = current_user.user_info.find(params[:id])
+      @user_info = UserInfo.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -89,5 +90,9 @@ class UserInfosController < ApplicationController
         :sex, :nickname, :birth, :destination, :hotel_type, :flight, :train,
         :wechat, :qq
         )
+    end
+
+    def valid?(user_info)
+      user_info.user_id == current_user.id
     end
 end
