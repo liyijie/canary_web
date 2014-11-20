@@ -30,6 +30,7 @@ class UserInfo < ActiveRecord::Base
   end
 
   def age
+    return "" if birth.blank?
     now = Time.now.utc.to_date
     now.year - birth.year - (birth.to_date.change(:year => now.year) > now ? 1 : 0)
   end

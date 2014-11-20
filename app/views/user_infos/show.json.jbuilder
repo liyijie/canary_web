@@ -1,1 +1,1 @@
-json.extract! @user_info, :id, :created_at, :updated_at
+json.extract! @user_info, :id, :sex, :nickname, :age, :destination, :hotel_type, :flight, :train 
