@@ -68,7 +68,7 @@ class UserInfo < ActiveRecord::Base
 
   def find_match_user_infos
     match_sex =  self.sex == "male" ? "female" : "male"
-    search_text = self.destination.sub("市", " ").sub("省"," ")
+    search_text = self.destination.to_s.sub("市", " ").sub("省"," ")
     search_contents = search_text.split(" ")
     return [] if search_contents.blank?
 
