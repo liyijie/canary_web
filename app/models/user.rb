@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   def follow! followed
-    self.relations.create! followed_id: followed.id
+    self.relations.find_or_create_by! followed_id: followed.id
   end
 
   def following? followed

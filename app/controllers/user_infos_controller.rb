@@ -2,7 +2,7 @@ class UserInfosController < ApplicationController
 
   before_action :authenticate_user_from_token!
   before_action :authenticate_user!
-  before_action :set_user_info, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_info, only: [:show, :edit, :update, :destroy, :follow]
 
   # GET /user_infos
   # GET /user_infos.json
@@ -21,6 +21,13 @@ class UserInfosController < ApplicationController
   # GET /user_infos/followers.json
   def followers
     @users = current_user.followers.paginate(:page => params[:page], :per_page => 10)
+  end
+
+  # GET /user_infos/1/follow
+  # GET /user_infos/1/follow.json
+  def follow
+    followed = @user_info.user
+    current_user.follow! followed
   end
 
   # GET /user_infos/1
