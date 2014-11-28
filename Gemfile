@@ -38,6 +38,9 @@ gem 'devise'
 gem 'sunspot_rails'
 gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
 
+# File attachment
+gem "paperclip", "~> 4.2"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
