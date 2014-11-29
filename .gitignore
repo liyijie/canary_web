@@ -16,3 +16,8 @@
 /solr
 /log/*.lck
 /tmp
+
+/public/system
+/solr
+/coverage/
+/spec/tmp

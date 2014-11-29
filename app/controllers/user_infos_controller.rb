@@ -4,6 +4,8 @@ class UserInfosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user_info, only: [:show, :edit, :update, :destroy, :follow]
 
+  before_action :convert_format, only: [ :create, :update ]
+
   # GET /user_infos
   # GET /user_infos.json
   def index
@@ -101,5 +103,14 @@ class UserInfosController < ApplicationController
 
     def valid?(user_info)
       user_info.user_id == current_user.id
+    end
+
+    def convert_format
+      file = params[:user_info][:avatar]
+      if !file.blank? && file.present? && file.content_type == 'application/octet-stream'
+        mime_type = MIME::Types.type_for(file.original_filename)    
+        file.content_type = mime_type.first.content_type if mime_type.first
+      end
+      params[:user_info][:avatar] = file
     end
 end
