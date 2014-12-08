@@ -4,10 +4,11 @@ class Api::SessionsController < Devise::SessionsController
 
   def create
     warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
+    user_info_id = current_user.user_info.blank? ? -1 : current_user.user_info.id
     render :status => 200,
     :json => { :success => true,
       :info => "Logged in",
-      :data => { :auth_token => current_user.authentication_token } }
+      :data => { :auth_token => current_user.authentication_token, :user_info_id => user_info_id } }
     end
 
     def destroy

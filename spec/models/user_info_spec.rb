@@ -144,13 +144,13 @@ RSpec.describe UserInfo, :type => :model do
     describe "male condition" do
       it "should not find parts female user infos" do
         @male = create(:male_user_info, destination: "北京市")
-        match_users = @male.find_match_user_infos
+        match_users = @male.find_match_user_infos({})
         expect(match_users.count).to eq 7
       end
       it "should not find all female user infos" do
         @male = create(:male_user_info, destination: "北京 天安门")
-        match_users = @male.find_match_user_infos
-        expect(match_users.count).to eq 13
+        match_users = @male.find_match_user_infos({})
+        expect(match_users.count).to eq 10
       end
     end
   end
