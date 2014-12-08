@@ -10,7 +10,7 @@ class UserInfosController < ApplicationController
   # GET /user_infos.json
   def index
     current_user_info = current_user.user_info
-    @user_infos = current_user_info.find_match_user_infos
+    @user_infos = current_user_info.find_match_user_infos(params)
   end
 
   # GET /user_infos/following
