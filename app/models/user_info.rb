@@ -43,6 +43,8 @@ class UserInfo < ActiveRecord::Base
   end
 
   def constellation
+    return "" if birth.blank?
+    
     year = birth.year
     mon = birth.mon
     day = birth.day
