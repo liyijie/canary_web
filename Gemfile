@@ -41,6 +41,9 @@ gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in developm
 # File attachment
 gem "paperclip", "~> 4.2"
 
+# paginate
+gem 'will_paginate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
