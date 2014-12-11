@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'agreement/index'
+
   devise_for :users
 
   namespace :api do
