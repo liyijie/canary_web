@@ -37,7 +37,11 @@ class User < ActiveRecord::Base
 
   def sms_token_validate
     sms_token_obj = SmsToken.find_by(phone: phone)
-    errors.add(:sms, '验证码不正确') unless sms_token_obj.try(:token) == sms_token
+    if sms_token_obj.try(:updated_at) < Time.zone.now - 5.minute
+      errors.add(:sms, '验证码已失效，请重新获取')
+    elsif sms_token_obj.try(:token) != sms_token 
+      errors.add(:sms, '验证码不正确，请重试')
+    end
   end
 
   has_many :relations, foreign_key: "follower_id", dependent: :destroy
