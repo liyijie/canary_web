@@ -22,12 +22,23 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  include ActiveModel::Validations
+
+  attr_accessor :sms_token
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :authentication_keys => [:phone]
 
   validates_uniqueness_of :phone
   validates_presence_of :phone
+
+  validate :sms_token_validate
+
+  def sms_token_validate
+    sms_token_obj = SmsToken.find_by(phone: phone)
+    errors.add(:sms, '验证码不正确') unless sms_token_obj.try(:token) == sms_token
+  end
 
   has_many :relations, foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_relations, class_name: "Relation", :foreign_key => "followed_id", dependent: :destroy

@@ -4,6 +4,7 @@ class Api::RegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(params[:user].to_hash)
+    puts "resource is:#{resource.inspect}"
     # resource.skip_confirmation!
     if resource.save
       sign_in resource
