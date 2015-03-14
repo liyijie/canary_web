@@ -34,6 +34,9 @@ end
 # Authentication
 gem 'devise'
 
+# Sms
+gem 'china_sms'
+
 # Searchable
 gem 'sunspot_rails'
 gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
