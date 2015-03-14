@@ -16,7 +16,7 @@ class SmsTokensController < ApplicationController
     respond_to do |format|
       if @sms_token.save
         format.html { redirect_to @sms_token, notice: 'SmsToken was successfully created.' }
-        format.json { render :show, status: :created, location: @sms_token }
+        format.json { render status: :created}
       else
         format.html { render :new }
         format.json { render json: @sms_token.errors, status: :unprocessable_entity }
