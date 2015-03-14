@@ -3,16 +3,27 @@ class SmsTokensController < ApplicationController
   end
 
   def create
-    sms_token = SmsToken.new sms_token_params
+    @sms_token = SmsToken.new sms_token_params
     token = (0..9).to_a.sample(6).join
 
     # 发送短信
     company = "旅客"
     ChinaSMS.use :yunpian, password: "e480d5b2daedcd3c0b0d83438ffa01b8"
-    result = ChinaSMS.to sms_token.phone, {company: company, code: token}, {tpl_id: 2}
+    result = ChinaSMS.to @sms_token.phone, {company: company, code: token}, {tpl_id: 2}
 
-    sms_token.token = token
-    sms_token.save
+    @sms_token.token = token
+
+    respond_to do |format|
+      if @sms_token.save
+        format.html { redirect_to @sms_token, notice: 'SmsToken was successfully created.' }
+        format.json { render :show, status: :created, location: @sms_token }
+      else
+        format.html { render :new }
+        format.json { render json: @sms_token.errors, status: :unprocessable_entity }
+      end
+    end
+
+
   end
 
   private
