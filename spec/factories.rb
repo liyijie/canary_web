@@ -1,4 +1,8 @@
-FactoryGirl.define do 
+FactoryGirl.define do  factory :sms_token do
+    phone "MyString"
+token "MyString"
+  end
+ 
   factory :user_info do
     sex :male
     nickname "MyString"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141128002657) do
+ActiveRecord::Schema.define(version: 20150314103218) do
 
   create_table "relations", force: true do |t|
     t.integer  "followed_id"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20141128002657) do
 
   add_index "relations", ["followed_id"], name: "index_relations_on_followed_id"
   add_index "relations", ["follower_id"], name: "index_relations_on_follower_id"
+
+  create_table "sms_tokens", force: true do |t|
+    t.string   "phone"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sms_tokens", ["phone"], name: "index_sms_tokens_on_phone"
 
   create_table "user_infos", force: true do |t|
     t.integer  "sex"
