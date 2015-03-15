@@ -3,7 +3,7 @@ class SmsTokensController < ApplicationController
   end
 
   def create
-    @sms_token = SmsToken.new sms_token_params
+    @sms_token = SmsToken.find_or_initialize_by phone: sms_token_params[:phone]
     token = (0..9).to_a.sample(6).join
 
     # 发送短信
