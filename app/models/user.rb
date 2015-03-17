@@ -38,9 +38,9 @@ class User < ActiveRecord::Base
   def sms_token_validate
     sms_token_obj = SmsToken.find_by(phone: phone)
     if sms_token_obj.try(:updated_at) < Time.zone.now - 5.minute
-      errors.add(:sms, '验证码已失效，请重新获取')
+      errors.add(:info, '验证码已失效，请重新获取')
     elsif sms_token_obj.try(:token) != sms_token 
-      errors.add(:sms, '验证码不正确，请重试')
+      errors.add(:info, '验证码不正确，请重试')
     end
   end
 
