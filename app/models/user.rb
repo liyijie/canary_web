@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   has_many :reverse_relations, class_name: "Relation", :foreign_key => "followed_id", dependent: :destroy
   has_many :following, through: :relations, source: :followed
   has_many :followers, through: :reverse_relations, source: :follower
-  has_one :user_info
+  has_one :user_info, dependent: :destroy
 
   before_save :ensure_authentication_token
 
